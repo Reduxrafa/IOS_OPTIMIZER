@@ -1,0 +1,29 @@
+name: OptimizerIA
+options:
+  bundleIdPrefix: br.com.optimizer-ia
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  OptimizerIA:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.com.optimizer-ia.webview
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+    info:
+      path: Generated-Info.plist
+      properties:
+        CFBundleDisplayName: Optimizer IA
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false

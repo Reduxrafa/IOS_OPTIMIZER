@@ -1,0 +1,25 @@
+# Projeto Xcode gerado pelo XcodeGen — nunca versionar, é regenerado com:
+#   xcodegen generate
+*.xcodeproj/
+*.xcworkspace/
+
+# Build
+build/
+DerivedData/
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Fastlane (quando configurado — ver CI-SETUP.md)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Dependências
+Pods/
+.build/
+
+# macOS / editor
+.DS_Store
+.vscode/

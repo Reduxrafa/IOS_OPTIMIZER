@@ -1,0 +1,44 @@
+name: iOS Build
+
+# Roda a cada push na main e também sob demanda (aba Actions > Run workflow).
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # macos-14 = Mac virtual temporário da GitHub, já vem com Xcode instalado.
+    # É esse runner que faz o papel do "Mac" — você nunca precisa ter um.
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+
+      - name: Gerar o projeto Xcode a partir do project.yml
+        run: xcodegen generate
+
+      # Build só para o simulador: valida que compila, sem precisar de
+      # certificado de assinatura. É o suficiente até a etapa de assinatura
+      # (Fastlane match) ser configurada — ver CI-SETUP.md.
+      - name: Compilar para simulador
+        run: >
+          xcodebuild
+          -project OptimizerIA.xcodeproj
+          -scheme OptimizerIA
+          -sdk iphonesimulator
+          -destination 'generic/platform=iOS Simulator'
+          clean build
+
+      # Quando a assinatura (Fastlane match + App Store Connect API key)
+      # estiver configurada como nos passos do CI-SETUP.md, descomente e
+      # adapte este passo para gerar um .ipa assinado e enviar ao TestFlight.
+      # - name: Build assinado + upload TestFlight
+      #   env:
+      #     APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      #   run: bundle exec fastlane beta
